@@ -31,12 +31,6 @@ function transform(filePath: string) {
   return schemas;
 }
 
-export interface GQLTransform {}
-
-export interface X extends GQLTransform {}
-
-export interface Y extends X {};
-
 export default transform;
 export {parse};
 export {transform};
