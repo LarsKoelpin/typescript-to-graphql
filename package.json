@@ -1,0 +1,39 @@
+{
+  "name": "ts-interface-to-gql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/glob": "^5.0.30",
+    "@types/jest": "^20.0.4",
+    "@types/node": "^8.0.14",
+    "jest": "^20.0.4",
+    "ts-jest": "^20.0.7",
+    "typescript": "^2.4.1"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testMatch": [
+      "**/?(*.)(spec|test).(ts|tsx|js)?(x)"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "moduleNameMapper": {
+      "\\.(png)$": "<rootDir>/empty-module.js",
+      "\\.(css|less)$": "<rootDir>/empty-module.js"
+    }
+  },
+  "dependencies": {
+    "glob": "^7.1.2"
+  }
+}
