@@ -1,12 +1,17 @@
 import * as fs from 'fs';
 import * as glob from 'glob';
 import * as path from 'path';
-import * as ts from "typescript";
+import * as ts from 'typescript';
 
+import { log } from './TransformLogger';
 import {parse} from './TypescriptParser';
 
+export const config = {
+    logging: true
+}
+
 export function findFiles(filePath: string) {
-    console.log("Searching in path ", filePath);
+    log("Searching in path ", filePath);
     const fileNames = glob.sync(path.join(filePath, "{,!(node_modules)/**/}*.ts"), {ignore: '/node_modules/', nodir: true});
     return fileNames;
 }
@@ -18,14 +23,14 @@ function transform(filePath: string) {
   const typeChecker = program.getTypeChecker();
   const sourceFiles = program.getSourceFiles();
 
-  console.log("Found SoureceFiles", fileNames);
-  console.log("Starting generation an", program.getCurrentDirectory())
+  log("Found SoureceFiles", fileNames);
+  log("Starting generation an", program.getCurrentDirectory())
   let schemas = '';
 
   sourceFiles.filter(f => f.fileName.indexOf('node_modules') === -1).forEach(sourceFile => {
       ts.forEachChild(sourceFile, node => {
           schemas += parse(sourceFile, node);
-          console.log(schemas);
+          log(schemas);
     });
   });
   return schemas;
@@ -34,3 +39,6 @@ function transform(filePath: string) {
 export default transform;
 export {parse};
 export {transform};
+
+export interface GQLQuery {}
+export interface GQLInput {}

@@ -1,38 +1,44 @@
 import 'ts-jest';
 
-import {findFiles, parse, transform} from '../src/transform';
+import {config, findFiles, parse, transform} from '../src/transform';
+import { resultAsm, resultBoth, resultExample, resultInput, resultTrans } from './results';
 
 interface Customer {
     name: String;
 }
 
+config.logging = false;
+
 describe('File Analyizing', () => {
    it('Shall find all ts-files', () => {
        console.log(findFiles(__dirname + "/app"));
-       expect(findFiles(__dirname + "/app")).toHaveLength(2);
+       expect(findFiles(__dirname + "/app/asm-test")).toHaveLength(2);
    });
 })
 
 describe('Transformation', () => {
-    it("transforms Customer to graphql type", () => {
-        const result = `
-type Order {
-issuedOn: Int
-description: String
-age: Int
-done: Boolean
-
-}
-`.trim();
-        expect(transform(__dirname + "/app/sub")).toBe(result);
+    it("Transforms Order to graphql type", () => {
+        expect(transform(__dirname + "/app/sub")).toBe(resultTrans);
     });
 
-    it("transforms GQLInterfaces only", () => {
+    it('Assembles all types', () => {
+        expect(transform(__dirname + "/app/asm-test")).toBe(resultAsm);
+    });
 
+    it("transforms GQLQuery interfaces", () => {
+        expect(transform(__dirname + "/app/trans-test/query")).toBe(resultExample);
+    });
+    
+    it("transforms GQLInput interfaces", () => {
+        expect(transform(__dirname + "/app/trans-test/input")).toBe(resultInput);
+    });
+
+    it("transforms GQLInput and GQLQuery interfaces", () => {
+        config.logging = true;
+        expect(transform(__dirname + "/app/trans-test/both")).toBe(resultBoth);
     });
 
     // types erknennen => types modellieren "Custom types mappen"
     it('models custom types correctly', () => {
-
-    })
+    });
 });
