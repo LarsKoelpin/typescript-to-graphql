@@ -2,7 +2,7 @@
   "name": "ts-interface-to-gql",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "./lib/src/transform.js",
   "scripts": {
     "test": "jest --watch"
   },
@@ -17,6 +17,7 @@
     "ts-jest": "^20.0.7",
     "typescript": "^2.4.1"
   },
+  "types": "./src/index.d.ts",
   "jest": {
     "transform": {
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"

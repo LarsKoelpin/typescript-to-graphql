@@ -1,4 +1,4 @@
-import { GQLQuery } from '../../../../src/transform';
+import { GQLQuery } from "ts-interface-to-gql";
 
 interface ExampleQuery extends GQLQuery {
     name: String;

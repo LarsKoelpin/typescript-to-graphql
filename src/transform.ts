@@ -28,17 +28,14 @@ function transform(filePath: string) {
   let schemas = '';
   
   sourceFiles.filter(f => f.fileName.indexOf('node_modules') === -1).forEach(sourceFile => {
-      ts.forEachChild(sourceFile, node => {
-          schemas += parse(sourceFile, node);
-          log(schemas);
+    ts.forEachChild(sourceFile, node => {
+        schemas += parse(sourceFile, node);
     });
   });
+  log("resulting schema: ", schemas);
   return schemas;
 }
 
 export default transform;
 export {parse};
 export {transform};
-
-export interface GQLQuery {}
-export interface GQLInput {}

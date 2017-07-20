@@ -1,4 +1,5 @@
-import { GQLInput, GQLQuery } from '../../../src/transform';
+import { GQLQuery } from "ts-interface-to-gql";
+
 interface Gh extends GQLQuery {
     age: number;
 }

@@ -60,7 +60,7 @@ export function parse(sourceFile: ts.SourceFile, node: ts.Node): string {
           } else if (isType(member, ts.SyntaxKind.StringKeyword)) {
             typeText = "String";
           } else {
-            log((member as any).type.kind);
+            log("Found unknown attribute, Please report:", (member as any).type.kind);
             typeText = (member as any).type.typeName.text; // String, Date Number...
           }
           members.push({
