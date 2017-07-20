@@ -61,9 +61,10 @@ gets hand over to the underlying graphql implementation (e.g. express-graphl), w
 * TypeScript File interface Project Scanning (Only extended interfaces get found!)
 * Supports simple inheritage chain
 
-# TODO
-* Add Supprt for the AS keyword
+# TODO (order by my importance)
 * Add support for complex types
+* Add Supprt for the AS keyword
+* Type Name collision detection 
+* Type Definition Ordering
 * Generate Graphql Schema directly (to prevent extra String parsing step)
 * Add Support for inheritance chains
-* Type Name collision detection 
