@@ -62,15 +62,10 @@ import {resolvers} from './resolvers';
 import {transform} from 'ts-interface-to-gql'
 
 let typeDefs = `
-type Mutation {
-  # A mutation to add a new channel to the list of channels
-  addPoll(poll: IncommingPoll): Poll
-  addDecision(decisions: IncommingDecisions): Poll
-}
-`;
-
+# Unspported (by this lib) Typedefs like mutations go in here
+`
 // this enables interface analysis.
-typeDefs = transform(__dirname) + typeDefs;
+const typeDefs = transform(__dirname) + typeDefs;
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 export { schema };
