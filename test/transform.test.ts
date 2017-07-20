@@ -34,7 +34,6 @@ describe('Transformation', () => {
     });
 
     it("transforms GQLInput and GQLQuery interfaces", () => {
-        config.logging = true;
         expect(transform(__dirname + "/app/trans-test/both")).toBe(resultBoth);
     });
 

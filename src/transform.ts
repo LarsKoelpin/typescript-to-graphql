@@ -26,7 +26,7 @@ function transform(filePath: string) {
   log("Found SoureceFiles", fileNames);
   log("Starting generation an", program.getCurrentDirectory())
   let schemas = '';
-
+  
   sourceFiles.filter(f => f.fileName.indexOf('node_modules') === -1).forEach(sourceFile => {
       ts.forEachChild(sourceFile, node => {
           schemas += parse(sourceFile, node);
