@@ -51,6 +51,33 @@ input ExampleQuery {
 }
 ```
 
+To kickstart the transformer, add it to your typeDefs schema.ts
+```typescript
+import {
+  addMockFunctionsToSchema,
+  makeExecutableSchema,
+} from 'graphql-tools';
+
+import {resolvers} from './resolvers';
+import {transform} from 'ts-interface-to-gql'
+
+let typeDefs = `
+type Mutation {
+  # A mutation to add a new channel to the list of channels
+  addPoll(poll: IncommingPoll): Poll
+  addDecision(decisions: IncommingDecisions): Poll
+}
+`;
+
+// this enables interface analysis.
+typeDefs = transform(__dirname) + typeDefs;
+
+const schema = makeExecutableSchema({ typeDefs, resolvers });
+export { schema };
+
+```
+
+
 # How does this work
 All GQLQuery and GQLInput interfaces get analyzed at startup and translated into a GQL-Schema. This schema
 gets hand over to the underlying graphql implementation (e.g. express-graphl), which creates the schema.
