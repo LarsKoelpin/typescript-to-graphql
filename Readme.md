@@ -75,7 +75,7 @@ export { schema };
 
 # How does this work
 All GQLQuery and GQLInput interfaces get analyzed at startup and translated into a GQL-Schema. This schema
-gets hand over to the underlying graphql implementation (e.g. express-graphl), which creates the schema.
+gets hand over to the underlying graphql-tools schema language parser, which creates the schema.
 
 # Features
 * Modelling of simple data types (Sting, Boolean, Integer and Date [as Int] are supported)
