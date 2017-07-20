@@ -1,20 +1,23 @@
 # Motivation
 This library is targeted to node.js developer, who develop their applications
-using typescript and graphql
+using the Typescript language and GraphQl.
 
 # Problem
-When I develop graphQl Applications, I often feel like I have to synchronize
+When I develop GraphQl applications, I often feel like I have to synchronize
 my TypeScript interfaces to match my graphQl schema or vise versa. This is a tedious task to do,
-when changing the schema in development and for me often leads to "any" typing because of that, 
-losing a valuable typescript feature.
+when changing the schema in development and for me often leads to "any" typings or differences 
+between the GQL Schema and the typescript interface. This leads to losing a valuable typescript features or introducing 
+avoidable bugs.
 
-This lib helps by translating typescript interfaces directly to graphql interfaces, so the 
+This lib helps by translating typescript interfaces directly to graphql schemas, so the 
 developer has to maintain only one "source of truth", which are typescript interfaces. 
 
 
 # The Gist
 To use the library, the developer has to extend the GQLQuery or GQLInput or both interface, provided by this package.
+The GQLQuery maps 1 to 1 to a GraphQL Query Type, while the GQLInput maps to its GraphQL input counterpart.
 
+The follwing code shows a typescript interface in action.
 ```typescript
 import { GQLQuery } from 'ts-interface-to-gql';
 
@@ -24,7 +27,7 @@ interface ExampleQuery extends GQLQuery {
 }
 ```
 
-This results e.g. in the follow schema
+This results code may result in the follow schema:
 ```graphql
 type ExampleQuery {
   name: String
@@ -32,8 +35,7 @@ type ExampleQuery {
 }
 ```
 
-Or inputs
-
+The same takes effect for inputs.
 ```typescript
 import { GQLQuery } from 'ts-interface-to-gql';
 
@@ -43,7 +45,7 @@ interface ExampleInput extends GQLInput {
 }
 ```
 
-results:
+which may result in:
 ```graphql
 input ExampleQuery {
   name: String
@@ -51,7 +53,7 @@ input ExampleQuery {
 }
 ```
 
-To kickstart the transformer, add it to your typeDefs schema.ts
+Finally, to kickstart the transformer, add it to your typeDefs schema.ts
 ```typescript
 import {
   addMockFunctionsToSchema,
@@ -74,8 +76,8 @@ export { schema };
 
 
 # How does this work
-All GQLQuery and GQLInput interfaces get analyzed at startup and translated into a GQL-Schema. This schema
-gets hand over to the underlying graphql-tools schema language parser, which creates the schema.
+All GQLQuery and GQLInput interfaces get analyzed at startup and translated into a corresponding GQL-Schema. This schema
+gets hand over to the underlying graphql-tools schema language parser, which creates the real gql schema.
 
 # Features
 * Modelling of simple data types (Sting, Boolean, Integer and Date [as Int] are supported)
