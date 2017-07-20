@@ -4,7 +4,7 @@ using the Typescript language and GraphQl.
 
 # Problem
 When I develop GraphQl applications, I often feel like I have to synchronize
-my TypeScript interfaces to match my graphQl schema or vise versa. This is a tedious task to do,
+my TypeScript interfaces to match my graphQl schema or vice versa. This is a tedious task to do,
 when changing the schema in development and for me often leads to "any" typings or differences 
 between the GQL Schema and the typescript interface. This leads to losing a valuable typescript features or introducing 
 avoidable bugs.
