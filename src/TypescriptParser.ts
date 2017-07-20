@@ -14,7 +14,8 @@ export interface GQLType {
 
 const customTypeMapping = {
   "Date": "Int",
-  "String": "String"
+  "String": "String",
+  "Boolean": "Boolean"
 };
 
 interface CreatedInterface {
@@ -79,7 +80,6 @@ export function parse(sourceFile: ts.SourceFile, node: ts.Node): string {
               dependencies.push(arrayType);
             }
           } else {
-            log("Found unknown attribute, Please report SyntaxKindID:", (member as any).type.kind);
             typeText = tsSyntaxToGraphQL(memberAsAny.type.kind); // String, Date Number...
             if(typeText === null) {
               const customType = (member as any).type.typeName.text;
@@ -130,7 +130,7 @@ const tsSyntaxToGraphQL = (type) => {
 const mapCustomType = (typeName: String): string => {
   const result = customTypeMapping[typeName.toString()];
   if(!result) {
-    throw new Error("Unknown custom type");
+    throw new Error("Unknown custom type " + typeName.toString());
   }
   return result;
 }

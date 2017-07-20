@@ -4,7 +4,8 @@
   "description": "",
   "main": "./lib/src/transform.js",
   "scripts": {
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",
@@ -23,7 +24,7 @@
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testMatch": [
-      "**/?(*.)(spec|test).(ts|tsx|js)?(x)"
+      "**/?(*.)(spec|test).(ts|tsx)?(x)"
     ],
     "moduleFileExtensions": [
       "ts",
