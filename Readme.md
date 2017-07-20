@@ -4,11 +4,11 @@ using typescript and graphql
 
 # Problem
 When I develop graphQl Applications, I often feel like I have to synchronize
-my TypeScript Interfaces with my graphQl Schema. This is a tedious task to do,
-when changing the schema and for me often leads to "any" typing because of that, 
-loosing a valuable typescript feature.
+my TypeScript interfaces to match my graphQl schema or vise versa. This is a tedious task to do,
+when changing the schema in development and for me often leads to "any" typing because of that, 
+losing a valuable typescript feature.
 
-This lib helps by translating typescript interfaces to graphql interfaces, so the 
+This lib helps by translating typescript interfaces directly to graphql interfaces, so the 
 developer has to maintain only one "source of truth", which are typescript interfaces. 
 
 
@@ -34,7 +34,7 @@ type ExampleQuery {
 
 # How does this work
 All GQLQuery and GQLInput interfaces get analyzed at startup and translated into a GQL-Schema. This schema
-gets hand over to the underlying graphql (e.g. express-graphl) library, which creates the schema.
+gets hand over to the underlying graphql implementation (e.g. express-graphl), which creates the schema.
 
 # Features
 * Modelling of simple data types (Sting, Boolean, Integer and Date [as Int] are supported)
