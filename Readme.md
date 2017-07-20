@@ -66,3 +66,4 @@ gets hand over to the underlying graphql implementation (e.g. express-graphl), w
 * Add support for complex types
 * Generate Graphql Schema directly (to prevent extra String parsing step)
 * Add Support for inheritance chains
+* Type Name collision detection 
