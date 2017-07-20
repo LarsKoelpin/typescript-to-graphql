@@ -62,7 +62,7 @@ gets hand over to the underlying graphql implementation (e.g. express-graphl), w
 * Supports simple inheritage chain
 
 # TODO (order by my importance)
-* Add support for complex types
+* Add support for complex types + Lists
 * Add Supprt for the AS keyword
 * Type Name collision detection 
 * Type Definition Ordering
