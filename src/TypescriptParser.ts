@@ -19,19 +19,14 @@ const customTypeMapping = {
   "ID": "String"
 };
 
-interface CreatedInterface {
-  interfaceName: string;
-  dependencies: string[]; // interface names
-}
-const createdInterfaces: CreatedInterface[] = [];
 
-export function parse(sourceFile: ts.SourceFile, node: ts.Node): string {
+export function parse(sourceFile: ts.SourceFile, node: ts.Node, interfaceRegistry: Set<string>): string {
   const declaration = node as ts.Declaration;
   let resultingSchema = "";
   if (declaration.kind === ts.SyntaxKind.InterfaceDeclaration) {
     let interfaceName = (declaration as ts.InterfaceDeclaration).name.getText();
     const members: GQLType[] = [];
-    log("Found interface: ", interfaceName);
+    log("Found interface: ", interfaceName, "in ", sourceFile.fileName);
     const typeScriptInterface = declaration as ts.InterfaceDeclaration;
 
     let isQuery = false;
@@ -102,6 +97,10 @@ export function parse(sourceFile: ts.SourceFile, node: ts.Node): string {
       }
       log("Adding new Custom Type", interfaceName);
       log("Created Custom Type ", interfaceName, " has dependencies to ", dependencies);
+      if (interfaceRegistry.has(interfaceName)) {
+        throw new Error(sourceFile.fileName + " has a type " + interfaceName + " which exists already in another file!")
+      }
+      interfaceRegistry.add(interfaceName)
     } else {
       log(interfaceName, " is not relevant");
     }
@@ -134,8 +133,4 @@ const mapCustomType = (typeName: String): string => {
     throw new Error("Unknown custom type " + typeName.toString());
   }
   return result;
-}
-
-const createDependency = () => {
-  
 }

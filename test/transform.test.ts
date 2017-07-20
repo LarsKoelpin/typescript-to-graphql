@@ -38,6 +38,12 @@ describe('Transformation', () => {
     });
 
     it('models custom types correctly', () => {
+        config.logging = true
         expect(transform(__dirname + "/app/complex")).toBe(resultComplex);
+    });
+
+    it('detects same type name', () => {
+        expect(() => transform(__dirname+ "/app/same-name"))
+        .toThrowError("Customer.ts has a type Customer which exists already in another file!");
     });
 });

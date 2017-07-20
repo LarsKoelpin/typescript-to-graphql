@@ -22,6 +22,7 @@ function transform(filePath: string) {
   const program = ts.createProgram(fileNames, compilerOptions);
   const typeChecker = program.getTypeChecker();
   const sourceFiles = program.getSourceFiles();
+  const interfaces = new Set();
 
   log("Found SoureceFiles", fileNames);
   log("Starting generation an", program.getCurrentDirectory())
@@ -29,7 +30,7 @@ function transform(filePath: string) {
   
   sourceFiles.filter(f => f.fileName.indexOf('node_modules') === -1).forEach(sourceFile => {
     ts.forEachChild(sourceFile, node => {
-        schemas += parse(sourceFile, node);
+        schemas += parse(sourceFile, node, interfaces);
     });
   });
   log("resulting schema: ", schemas);

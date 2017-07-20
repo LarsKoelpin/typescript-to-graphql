@@ -85,10 +85,10 @@ gets hand over to the underlying graphql-tools schema language parser, which cre
 * TypeScript File interface Project Scanning (Only extended interfaces get found!)
 * Supports simple inheritage chain
 * Support for complex types + Lists 
+* Type Name collision detection 
 
 # TODO (order by my importance)
 * Add Support for Query and Mutation
 * Add Support for the AS keyword
-* Type Name collision detection 
 * Generate Graphql Schema directly (to prevent extra String parsing step)
 * Add Support for inheritance chains
