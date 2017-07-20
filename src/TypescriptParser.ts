@@ -12,12 +12,9 @@ export interface GQLType {
   type: string;
 }
 
-const tsToGraphqlType = {
-  String: "String",
-  string: "String",
-  number: "Int",
-  Date: "Int",
-  boolean: "Boolean"
+const customTypeMapping = {
+  "date": "Int",
+  "string": "String"
 };
 
 export function parse(sourceFile: ts.SourceFile, node: ts.Node): string {
@@ -54,40 +51,38 @@ export function parse(sourceFile: ts.SourceFile, node: ts.Node): string {
           const memberName = (member as any).name.getText();
           const memberAsAny = (member as any);
           let typeText;
-          let isCustomType = false;
-          if (isType(member, ts.SyntaxKind.NumberKeyword)) {
-            typeText = "number";
-          } else if (isType(member, ts.SyntaxKind.BooleanKeyword)) {
-            typeText = "boolean";
-          } else if (isType(member, ts.SyntaxKind.StringKeyword)) {
-            typeText = "String";
+          let isTsArray = false;
+          if (isType(member, ts.SyntaxKind.NumberKeyword)
+             || isType(member, ts.SyntaxKind.BooleanKeyword
+             || isType(member, ts.SyntaxKind.StringKeyword))) {
+            typeText = tsSyntaxToGraphQL(memberAsAny.type.kind);
+            if(typeText === null) {
+              const customType = (member as any).type.typeName.text;
+              typeText = mapCustomType(customType);
+            }
           } else if(isType(member, ts.SyntaxKind.ArrayType)) {
             const elemKind = memberAsAny.type.elementType.kind;
-            console.log(memberName, " is array");
             if(isBuiltIn(elemKind)) {
+              // Map TS ENUM to GRAPHQL String
               typeText = `[${tsSyntaxToGraphQL(elemKind)}]`;
-              isCustomType = true;
+              isTsArray = true;
             } else {
               const arrayType = memberAsAny.type.elementType.typeName.getText();
               typeText = `[${arrayType}]`;
             }
           } else {
-            log("Found unknown attribute, Please report:", (member as any).type.kind);
-            typeText = (member as any).type.typeName.text; // String, Date Number...
+            log("Found unknown attribute, Please report SyntaxKindID:", (member as any).type.kind);
+            typeText = tsSyntaxToGraphQL(memberAsAny.type.kind); // String, Date Number...
+            if(typeText === null) {
+              const customType = (member as any).type.typeName.text;
+              typeText = mapCustomType(customType);
+            }
           }
-          console.log("member ", memberName, " TYPE: ", typeText)
-          if(!isCustomType) {
-            members.push({
-              identifier: memberName,
-              type: tsToGraphqlType[typeText]
-            });
-          } else {
-            members.push({
-              identifier: memberName,
-              type: typeText
-             });
-          }
-          
+          log("member ", memberName, " TYPE: ", typeText)
+          members.push({
+            identifier: memberName,
+            type: typeText
+          });
         }
       });
       if (isQuery) {
@@ -118,6 +113,14 @@ const tsSyntaxToGraphQL = (type) => {
     case ts.SyntaxKind.StringKeyword: return 'String';
     case ts.SyntaxKind.BooleanKeyword: return 'Boolean';
     case ts.SyntaxKind.NumberKeyword: return 'Int';
-    default: return "NULL";
+    default: return null;
   }
+}
+
+const mapCustomType = (typeName: String): string => {
+  const result = customTypeMapping[typeName.toLowerCase()];
+  if(!result) {
+    throw new Error("Unknown custom type");
+  }
+  return result;
 }
