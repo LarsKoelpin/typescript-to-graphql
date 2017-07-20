@@ -15,7 +15,8 @@ export interface GQLType {
 const customTypeMapping = {
   "Date": "Int",
   "String": "String",
-  "Boolean": "Boolean"
+  "Boolean": "Boolean",
+  "ID": "String"
 };
 
 interface CreatedInterface {

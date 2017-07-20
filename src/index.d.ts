@@ -3,4 +3,5 @@ declare module 'ts-interface-to-gql' {
     export const config: {logging: boolean};
     export interface GQLQuery {}
     export interface GQLInput {}
+    export type ID = string;
 }
