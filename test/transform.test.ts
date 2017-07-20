@@ -39,7 +39,7 @@ describe('Transformation', () => {
 
     // types erknennen => types modellieren "Custom types mappen"
     it('models custom types correctly', () => {
-       // config.logging = true;
+        config.logging = true;
         expect(transform(__dirname + "/app/complex")).toBe(resultComplex);
     });
 });

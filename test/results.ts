@@ -49,15 +49,14 @@ age: Int
 `;
 
 export const resultComplex = 
-`type Order {
-    issuedOn: Int
-    target: String
+`type Customer {
+orders: [Order]
+name: String
 
 }
-
-type Customer {
-    orders: [Order]
-    name: String
+type Order {
+issuedOn: Int
+target: String
 
 }
 `

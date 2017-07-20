@@ -13,9 +13,15 @@ export interface GQLType {
 }
 
 const customTypeMapping = {
-  "date": "Int",
-  "string": "String"
+  "Date": "Int",
+  "String": "String"
 };
+
+interface CreatedInterface {
+  interfaceName: string;
+  dependencies: string[]; // interface names
+}
+const createdInterfaces: CreatedInterface[] = [];
 
 export function parse(sourceFile: ts.SourceFile, node: ts.Node): string {
   const declaration = node as ts.Declaration;
@@ -46,6 +52,7 @@ export function parse(sourceFile: ts.SourceFile, node: ts.Node): string {
     }
 
     if (isQuery || isInput) {
+      let dependencies: string[] = [];
       typeScriptInterface.members.forEach(member => {
         if (member.kind === ts.SyntaxKind.PropertySignature) {
           const memberName = (member as any).name.getText();
@@ -69,6 +76,7 @@ export function parse(sourceFile: ts.SourceFile, node: ts.Node): string {
             } else {
               const arrayType = memberAsAny.type.elementType.typeName.getText();
               typeText = `[${arrayType}]`;
+              dependencies.push(arrayType);
             }
           } else {
             log("Found unknown attribute, Please report SyntaxKindID:", (member as any).type.kind);
@@ -91,6 +99,8 @@ export function parse(sourceFile: ts.SourceFile, node: ts.Node): string {
       if (isInput) {
         resultingSchema += buildGqlInput(interfaceName, members);
       }
+      log("Adding new Custom Type", interfaceName);
+      log("Created Custom Type ", interfaceName, " has dependencies to ", dependencies);
     } else {
       log(interfaceName, " is not relevant");
     }
@@ -118,9 +128,13 @@ const tsSyntaxToGraphQL = (type) => {
 }
 
 const mapCustomType = (typeName: String): string => {
-  const result = customTypeMapping[typeName.toLowerCase()];
+  const result = customTypeMapping[typeName.toString()];
   if(!result) {
     throw new Error("Unknown custom type");
   }
   return result;
+}
+
+const createDependency = () => {
+  
 }
