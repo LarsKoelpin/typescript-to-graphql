@@ -1,11 +1,7 @@
 import 'ts-jest';
 
 import {config, findFiles, parse, transform} from '../src/transform';
-import { resultAsm, resultBoth, resultExample, resultInput, resultTrans } from './results';
-
-interface Customer {
-    name: String;
-}
+import { resultAsm, resultBoth, resultComplex, resultExample, resultInput, resultList, resultTrans } from './results';
 
 config.logging = false;
 
@@ -37,7 +33,13 @@ describe('Transformation', () => {
         expect(transform(__dirname + "/app/trans-test/both")).toBe(resultBoth);
     });
 
+    it("models list types correctly", () => {
+       expect(transform(__dirname + "/app/list")).toBe(resultList);
+    });
+
     // types erknennen => types modellieren "Custom types mappen"
     it('models custom types correctly', () => {
+       // config.logging = true;
+        expect(transform(__dirname + "/app/complex")).toBe(resultComplex);
     });
 });

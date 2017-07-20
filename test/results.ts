@@ -47,3 +47,24 @@ age: Int
 
 }
 `;
+
+export const resultComplex = 
+`type Order {
+    issuedOn: Int
+    target: String
+
+}
+
+type Customer {
+    orders: [Order]
+    name: String
+
+}
+`
+
+export const resultList =
+`type Customer {
+contacts: [String]
+
+}
+`

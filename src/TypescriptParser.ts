@@ -52,21 +52,42 @@ export function parse(sourceFile: ts.SourceFile, node: ts.Node): string {
       typeScriptInterface.members.forEach(member => {
         if (member.kind === ts.SyntaxKind.PropertySignature) {
           const memberName = (member as any).name.getText();
+          const memberAsAny = (member as any);
           let typeText;
+          let isCustomType = false;
           if (isType(member, ts.SyntaxKind.NumberKeyword)) {
             typeText = "number";
           } else if (isType(member, ts.SyntaxKind.BooleanKeyword)) {
             typeText = "boolean";
           } else if (isType(member, ts.SyntaxKind.StringKeyword)) {
             typeText = "String";
+          } else if(isType(member, ts.SyntaxKind.ArrayType)) {
+            const elemKind = memberAsAny.type.elementType.kind;
+            console.log(memberName, " is array");
+            if(isBuiltIn(elemKind)) {
+              typeText = `[${tsSyntaxToGraphQL(elemKind)}]`;
+              isCustomType = true;
+            } else {
+              const arrayType = memberAsAny.type.elementType.typeName.getText();
+              typeText = `[${arrayType}]`;
+            }
           } else {
             log("Found unknown attribute, Please report:", (member as any).type.kind);
             typeText = (member as any).type.typeName.text; // String, Date Number...
           }
-          members.push({
-            identifier: memberName,
-            type: tsToGraphqlType[typeText]
-          });
+          console.log("member ", memberName, " TYPE: ", typeText)
+          if(!isCustomType) {
+            members.push({
+              identifier: memberName,
+              type: tsToGraphqlType[typeText]
+            });
+          } else {
+            members.push({
+              identifier: memberName,
+              type: typeText
+             });
+          }
+          
         }
       });
       if (isQuery) {
@@ -86,3 +107,17 @@ export function parse(sourceFile: ts.SourceFile, node: ts.Node): string {
 
 const isType = (member: any, kind: ts.SyntaxKind) =>
   (member as any).type.kind === kind;
+
+const isBuiltIn = (type: any) => 
+type == ts.SyntaxKind.StringKeyword ||
+type == ts.SyntaxKind.NumberKeyword ||
+type == ts.SyntaxKind.BooleanKeyword 
+
+const tsSyntaxToGraphQL = (type) => {
+  switch(type) {
+    case ts.SyntaxKind.StringKeyword: return 'String';
+    case ts.SyntaxKind.BooleanKeyword: return 'Boolean';
+    case ts.SyntaxKind.NumberKeyword: return 'Int';
+    default: return "NULL";
+  }
+}
