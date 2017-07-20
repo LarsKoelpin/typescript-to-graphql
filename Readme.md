@@ -82,11 +82,10 @@ gets hand over to the underlying graphql implementation (e.g. express-graphl), w
 * Generating GraphQL Schema (String)
 * TypeScript File interface Project Scanning (Only extended interfaces get found!)
 * Supports simple inheritage chain
+* Support for complex types + Lists 
 
 # TODO (order by my importance)
-* Add support for complex types + Lists
-* Add Supprt for the AS keyword
+* Add Support for the AS keyword
 * Type Name collision detection 
-* Type Definition Ordering
 * Generate Graphql Schema directly (to prevent extra String parsing step)
 * Add Support for inheritance chains
