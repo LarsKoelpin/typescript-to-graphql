@@ -32,6 +32,25 @@ type ExampleQuery {
 }
 ```
 
+Or inputs
+
+```typescript
+import { GQLQuery } from 'ts-interface-to-gql';
+
+interface ExampleInput extends GQLInput {
+    name: String;
+    age: number;
+}
+```
+
+results:
+```graphql
+input ExampleQuery {
+  name: String
+  age: Int
+}
+```
+
 # How does this work
 All GQLQuery and GQLInput interfaces get analyzed at startup and translated into a GQL-Schema. This schema
 gets hand over to the underlying graphql implementation (e.g. express-graphl), which creates the schema.
