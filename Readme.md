@@ -92,3 +92,8 @@ gets hand over to the underlying graphql-tools schema language parser, which cre
 * Add Support for the AS keyword
 * Generate Graphql Schema directly (to prevent extra String parsing step)
 * Add Support for inheritance chains
+
+
+# Related work
+A similar solution is from nicolasgere, who in contrary to this solution, makes heavy use of decorators and classes.
+https://github.com/nicolasgere/graphql-ts
