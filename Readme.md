@@ -95,5 +95,5 @@ gets hand over to the underlying graphql-tools schema language parser, which cre
 
 
 # Related work
-A similar solution is from nicolasgere, who in contrary to this solution, makes heavy use of decorators and classes.
+A similar solution is from nicolasgere, who in contrary to this solution, makes heavy use of decorators and classes, which for me is too much, as I only need the typings.
 https://github.com/nicolasgere/graphql-ts
