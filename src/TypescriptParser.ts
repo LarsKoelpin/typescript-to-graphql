@@ -57,8 +57,8 @@ export function parse(sourceFile: ts.SourceFile, node: ts.Node, interfaceRegistr
           let typeText;
           let isTsArray = false;
           if (isType(member, ts.SyntaxKind.NumberKeyword)
-             || isType(member, ts.SyntaxKind.BooleanKeyword
-             || isType(member, ts.SyntaxKind.StringKeyword))) {
+             || isType(member, ts.SyntaxKind.BooleanKeyword)
+             || isType(member, ts.SyntaxKind.StringKeyword)) {
             typeText = tsSyntaxToGraphQL(memberAsAny.type.kind);
             if(typeText === null) {
               const customType = (member as any).type.typeName.text;
