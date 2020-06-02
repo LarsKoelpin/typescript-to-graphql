@@ -1,4 +1,3 @@
-import * as fs from 'fs';
 import * as glob from 'glob';
 import * as path from 'path';
 import * as ts from 'typescript';
@@ -20,9 +19,9 @@ function transform(filePath: string) {
   const compilerOptions: ts.CompilerOptions = {};
   const fileNames = findFiles(filePath);
   const program = ts.createProgram(fileNames, compilerOptions);
-  const typeChecker = program.getTypeChecker();
+  const typeChecker = program.getTypeChecker(); // XXX unused var
   const sourceFiles = program.getSourceFiles();
-  const interfaces = new Set();
+  const interfaces = new Set<string>();
 
   log("Found SoureceFiles", fileNames);
   log("Starting generation an", program.getCurrentDirectory())
